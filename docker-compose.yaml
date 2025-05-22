@@ -1,0 +1,19 @@
+services:
+  rsc:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      - POSTGRES_USER=rsc-user
+      - POSTGRES_PASSWORD=rsc-password
+      - POSTGRES_DB=rsc_db
+    ports:
+      - '5432:5432'

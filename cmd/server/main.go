@@ -3,15 +3,19 @@ package main
 import (
 	"log"
 	"os"
+
+	new_app "github.com/pizzament/rsc-test/internal/app"
 )
 
 func main() {
-	if err := run(); err != nil {
-		log.Fatal(err)
-	}
-	os.Exit(0)
-}
+	log.Println("app starting")
 
-func run() error {
-	return nil
+	app, err := new_app.NewApp(os.Getenv("CONFIG_FILE"))
+	if err != nil {
+		panic(err)
+	}
+
+	if err := app.ListenAndServe(); err != nil {
+		panic(err)
+	}
 }

@@ -1,0 +1,10 @@
+service:
+  host:
+  port: 3000
+
+database:
+  host: postgres
+  port: 5432
+  user: rsc-user
+  password: rsc-password
+  db_name: rsc_db

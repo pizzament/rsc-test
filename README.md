@@ -3,5 +3,6 @@
 # to-do
 
 graceful shutdown
-config file
 logger
+linter
+validation
