@@ -1,0 +1,49 @@
+### add banner click id=1
+GET http://localhost:3000/counter/1
+Content-Type: application/json
+
+### expected {}
+
+
+### add banner click id=2
+GET http://localhost:3000/counter/2
+Content-Type: application/json
+
+### expected {}
+
+
+### get banner clicks id=1
+POST http://localhost:3000/stats/1
+Content-Type: application/json
+
+{
+  "from": "2024-12-12T10:00:00",
+  "to": "2024-12-12T10:05:00"
+}
+
+### expected {
+### "stats": [
+###     {"ts": "2024-12-12T10:00:00", "v": 4},
+###     {"ts": "2024-12-12T10:01:00", "v": 2},
+###     {"ts": "2024-12-12T10:03:00", "v": 1},
+###     {"ts": "2024-12-12T10:04:00", "v": 1},
+###     ]
+### }
+
+
+### get banner clicks id=2
+POST http://localhost:3000/stats/2
+Content-Type: application/json
+
+{
+  "from": "2024-12-12T10:00:00",
+  "to": "2024-12-12T10:05:00"
+}
+
+### expected {
+### "stats": [
+### {"ts": "2024-12-12T10:00:00", "v": 1},
+### {"ts": "2024-12-12T10:01:00", "v": 1},
+### {"ts": "2024-12-12T10:04:00", "v": 1},
+###     ]
+### }
