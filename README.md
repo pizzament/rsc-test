@@ -20,7 +20,7 @@ make dc
 ```bash
 make up-migrations
 ```
-### Кидать тесты из /example
+### Кидать тесты из /example в localhost:3000
   
 ### 
 ### 
