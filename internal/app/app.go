@@ -49,22 +49,24 @@ func (app *App) ListenAndServe() error {
 func bootstrapHandler(config *config.Config) http.Handler {
 	ctx := context.Background()
 
+	// бд пул
 	configPgx, err := pgxpool.ParseConfig(fmt.Sprintf("postgresql://%s:%s@%s:%s/%s?sslmode=disable", config.Database.User, config.Database.Password, config.Database.Host, config.Database.Port, config.Database.DBName))
 	if err != nil {
-		log.Println("unable to parse pgx config: ", err)
+		log.Fatalln("unable to parse pgx config: ", err)
 	}
 
 	pool, err := pgxpool.NewWithConfig(ctx, configPgx)
 	if err != nil {
-		log.Println("unable to create pgx pool: ", err)
+		log.Fatalln("unable to create pgx pool: ", err)
 	}
 
-	repository := repository.NewRepository(pool)
-	service := service.NewService(repository)
+	// создание репозитория и сервиса
+	repo := repository.NewRepository(pool)
+	svc := service.NewService(repo)
 
 	mx := http.NewServeMux()
-	mx.Handle("GET /counter/{banner_id}", counter_handler.NewCounterHandler(service))
-	mx.Handle("POST /stats/{banner_id}", stats_handler.NewStatsHandler(service))
+	mx.Handle("GET /counter/{banner_id}", counter_handler.NewCounterHandler(svc))
+	mx.Handle("POST /stats/{banner_id}", stats_handler.NewStatsHandler(svc))
 
 	return mx
 }
